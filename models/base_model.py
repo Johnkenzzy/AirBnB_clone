@@ -3,7 +3,6 @@
 Module base_model
 This module defines the parent class BaseModel
 """
-import time
 from datetime import datetime
 from uuid import uuid4
 # from models import storage
@@ -14,7 +13,7 @@ class BaseModel():
 
     def __init__(self, *args, **kwargs):
         """Initializes instance attributes"""
-        curr_date = datetime.now() # .strftime("%Y-%m-%dT%H:%M:%S.%f")
+        curr_date = datetime.now()
         self.name = None
         self.my_number = None
         self.id = str(uuid4())

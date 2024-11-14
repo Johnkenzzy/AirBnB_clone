@@ -26,6 +26,7 @@ class FileStorage():
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
         serializable_objects = {}
+
         for key, obj in FileStorage.__objects.items():
             serializable_objects[key] = obj.to_dict()
 
@@ -36,8 +37,9 @@ class FileStorage():
         """Deserializes the JSON file to __objects if the JSON file exits"""
         if os.path.exists(FileStorage.__file_path):
             try:
-                with open(FileStorage.__file_path, 'r', encoding="utf-8") as file:
+                with open(FileStorage.__file_path, 'r') as file:
                     data = json.load(file)
+
                 for key, obj_dict in data.items():
                     class_name = obj_dict.get("__class__")
                     if class_name:
@@ -45,6 +47,7 @@ class FileStorage():
                         if cls:
                             obj = cls(**obj_dict)
                             FileStorage.__objects[key] = obj
+
             except json.JSONDecodeError:
                 pass
 
