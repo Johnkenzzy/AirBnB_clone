@@ -14,8 +14,6 @@ class BaseModel():
     def __init__(self, *args, **kwargs):
         """Initializes instance attributes"""
         curr_date = datetime.now()
-        self.name = None
-        self.my_number = None
         self.id = str(uuid4())
         self.created_at = curr_date
         self.updated_at = curr_date
@@ -49,5 +47,3 @@ class BaseModel():
         instance_dict["created_at"] = self.created_at.isoformat()
         instance_dict["updated_at"] = self.updated_at.isoformat()
         return (instance_dict)
-
-

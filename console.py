@@ -8,11 +8,26 @@ import sys
 import shlex
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     """Command interpreter to make and view changes in hbnb project classes"""
     prompt = "(hbnb) "
+    class_list = [
+            'BaseModel', 'User', 'State', 'City',
+            'Amenity', 'Place', 'Review'
+            ]
+    class_map = {
+            "BaseModel": BaseModel, "User": User, "State": State,
+            "City": City, "Amenity": Amenity, "Place": Place,
+            "Review": Review
+            }
 
     def do_quit(self, line):
         """Quit command to exit the program gracefully"""
@@ -33,17 +48,18 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        if class_name not in ['BaseModel']:
+        if class_name not in self.class_list:
             print("** class doesn't exist **")
             return
 
-        new_instance = BaseModel()
+        cls = self.class_map[class_name]
+        new_instance = cls()
         new_instance.save()
         print(new_instance.id)
 
     def do_show(self, line):
         """Prints the string representation of an instance
-           
+
            Ex: show BaseModel 1234-1234-1234
         """
         args = line.split()
@@ -55,17 +71,17 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         instance_id = args[1] if len(args) > 1 else None
 
-        if class_name not in ['BaseModel', 'User']:
+        if class_name not in self.class_list:
             print("** class doesn't exist **")
             return
-        
+
         if not instance_id:
             print("** instance id missing **")
             return
 
         key = f"{class_name}.{instance_id}"
         instance = storage.all().get(key)
-        
+
         if instance:
             print(instance)
         else:
@@ -85,17 +101,17 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         instance_id = args[1] if len(args) > 1 else None
 
-        if class_name not in ['BaseModel', 'User']:
+        if class_name not in self.class_list:
             print("** class doesn't exist **")
             return
-        
+
         if not instance_id:
             print("** instance id missing **")
             return
 
         key = f"{class_name}.{class_id}"
         instance = storage.all().get(key)
-        
+
         if instance:
             del storage.all()[key]
         else:
@@ -110,10 +126,10 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        if class_name not in ['BaseModel', 'User']:
+        if class_name not in self.class_list:
             print("** class doesn't exist **")
             return
-        
+
         all_objs = storage.all()
         filtered_objs = []
 
@@ -135,7 +151,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        if class_name not in ['BaseModel', 'User']:
+        if class_name not in self.class_list:
             print("** class doesn't exist **")
             return
 
@@ -154,7 +170,7 @@ class HBNBCommand(cmd.Cmd):
         if not attr_name:
             print("** attribute name missing **")
             return
-        
+
         attr_value = args[3] if len(args) > 3 else None
         if not attr_value:
             print("** value missing **")
@@ -184,6 +200,7 @@ class HBNBCommand(cmd.Cmd):
 
         setattr(obj, attr_name, attr_value)
         obj.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
