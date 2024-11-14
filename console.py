@@ -55,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         instance_id = args[1] if len(args) > 1 else None
 
-        if class_name not in ['BaseModel']:
+        if class_name not in ['BaseModel', 'User']:
             print("** class doesn't exist **")
             return
         
@@ -85,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         instance_id = args[1] if len(args) > 1 else None
 
-        if class_name not in ['BaseModel']:
+        if class_name not in ['BaseModel', 'User']:
             print("** class doesn't exist **")
             return
         
@@ -110,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        if class_name not in ['BaseModel']:
+        if class_name not in ['BaseModel', 'User']:
             print("** class doesn't exist **")
             return
         
@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        if class_name not in ['BaseModel']:
+        if class_name not in ['BaseModel', 'User']:
             print("** class doesn't exist **")
             return
 

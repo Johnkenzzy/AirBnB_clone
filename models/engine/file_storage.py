@@ -6,6 +6,7 @@ This module defines the class FileStorage
 import os
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage():
@@ -39,11 +40,15 @@ class FileStorage():
             try:
                 with open(FileStorage.__file_path, 'r') as file:
                     data = json.load(file)
-
+                
+                class_map = {
+                        "BaseModel": BaseModel,
+                        "User": User
+                        }
                 for key, obj_dict in data.items():
                     class_name = obj_dict.get("__class__")
                     if class_name:
-                        cls = globals().get(class_name)
+                        cls = class_map.get(class_name)
                         if cls:
                             obj = cls(**obj_dict)
                             FileStorage.__objects[key] = obj
