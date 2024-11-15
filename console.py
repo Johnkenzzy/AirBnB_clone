@@ -109,11 +109,12 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-        key = f"{class_name}.{class_id}"
+        key = f"{class_name}.{instance_id}"
         instance = storage.all().get(key)
 
         if instance:
             del storage.all()[key]
+            storage.save()
         else:
             print("** no instance found **")
 
@@ -200,6 +201,110 @@ class HBNBCommand(cmd.Cmd):
 
         setattr(obj, attr_name, attr_value)
         obj.save()
+
+    def do_count(self, line):
+        """Retrieve the number of instances of a class"""
+        args = line.split()
+
+        if not args:
+            print("** class name missing **")
+            return
+
+        class_name = args[0]
+        if class_name not in self.class_list:
+            print("** class doesn't exist **")
+            return
+
+        all_objs = storage.all()
+        num_of_instances = 0
+
+        for obj in all_objs.values():
+            if type(obj).__name__ == class_name:
+                num_of_instances += 1
+
+        print(num_of_instances)
+
+    def default(self, line):
+        """
+        Handles special commands in dot notation.
+        Examples:
+            <class name>.all()
+            <class name>.count()
+            <class name>.show(<id>)
+            <class name>.destroy(<id>)
+            <class name>.update(<id>, <attribute>, <value>)
+        """
+        if "." not in line or "(" not in line or ")" not in line:
+            print(f"** Unknown command: {line} **")
+            return
+
+        try:
+            class_name, rest = line.split(".", 1)
+            command, args = rest.split("(", 1)
+            args = args.rstrip(")")
+        except ValueError:
+            print(f"** Unknown command: {line} **")
+            return
+
+        if class_name not in self.class_list:
+            print("** class doesn't exist **")
+            return
+
+        if command == "all":
+            self.do_all(f"{class_name}")
+        elif command == "count":
+            self.do_count(f"{class_name}")
+        elif command == "show":
+            self.do_show(f"{class_name} {args}")
+        elif command == "destroy":
+            self.do_destroy(f"{class_name} {args}")
+        elif command == "update":
+            self._handle_update(class_name, args)
+        else:
+            print(f"** Unknown command: {line} **")
+
+    def _handle_update(self, class_name, args):
+        """
+        Handle update commands.
+        Examples:
+            <class name>.update(<id>, <attribute name>, <attribute value>)
+            <class name>.update(<id>, <dictionary of attributes>)
+        """
+        parts = args.split(", ", 1)
+        if len(parts) < 2:
+            print("** instance id missing **")
+            return
+
+        instance_id = parts[0].strip("\"'")
+        key = f"{class_name}.{instance_id}"
+        instance = storage.all().get(key)
+
+        if not instance:
+            print("** no instance found **")
+            return
+
+        if "{" in parts[1] and "}" in parts[1]:
+            try:
+                attributes = eval(parts[1])
+                if not isinstance(attributes, dict):
+                    raise ValueError
+            except (SyntaxError, ValueError):
+                print("** invalid dictionary format **")
+                return
+
+            for attr, value in attributes.items():
+                setattr(instance, attr, value)
+            instance.save()
+        else:
+            attr_parts = parts[1].split(", ", 1)
+            if len(attr_parts) < 2:
+                print("** attribute value missing **")
+                return
+
+            attr_name = attr_parts[0].strip("\"'")
+            attr_value = attr_parts[1].strip("\"'")
+            setattr(instance, attr_name, attr_value)
+            instance.save()
 
 
 if __name__ == '__main__':
