@@ -23,7 +23,7 @@ class Place(BaseModel):
         amenity_ids (list of str): List of amenity IDs available at the place.
     """
     city_id = ""
-    state_id = ""
+    user_id = ""
     name = ""
     description = ""
     number_rooms = 0
