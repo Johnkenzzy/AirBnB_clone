@@ -6,6 +6,8 @@ Class HBNBCommand is defined in this module and inherits from cmd.Cmd
 import cmd
 import sys
 import shlex
+import ast
+import json
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -285,9 +287,9 @@ class HBNBCommand(cmd.Cmd):
 
         if "{" in parts[1] and "}" in parts[1]:
             try:
-                attributes = eval(parts[1])
+                attributes = ast.literal_eval(parts[1])
                 if not isinstance(attributes, dict):
-                    raise ValueError
+                    pass
             except (SyntaxError, ValueError):
                 print("** invalid dictionary format **")
                 return
