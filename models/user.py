@@ -13,3 +13,12 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize User instance attributes"""
+        super().__init__(*args, **kwargs)
+        if not kwargs:
+            self.email = self.email
+            self.password = self.password
+            self.first_name = self.first_name
+            self.last_name = self.last_name
