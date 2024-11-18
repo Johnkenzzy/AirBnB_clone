@@ -30,8 +30,8 @@ To run this project, you need:
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/AirBnB-clone.git
-cd AirBnB-clone
+git clone https://github.com/johnkenzzy/AirBnB_clone.git
+cd AirBnB_clone
 ```
 
 2. Run the command interpreter:
@@ -105,6 +105,8 @@ All models inherit from BaseModel, and currently include:
 - **State:** Represents a geographic area or region.
 - **City:** Represents a city associated with a state.
 - **Place:** Represents a rental listing, with fields for location, amenities, and pricing.
+- **Amenity:** Represents the amenities present in the space.
+- **Review:** For users review.
 
 Each class contains attributes relevant to its purpose and is stored persistently within the file storage system.
 
