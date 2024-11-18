@@ -40,7 +40,7 @@ class TestBaseModelInstantiation(unittest.TestCase):
         self.assertIsInstance(model.updated_at, datetime)
 
     def test_created_and_updated_at_initially_equal(self):
-        """Test that created_at and updated_at are the same at instantiation."""
+        """Test that created_at and updated_at are the same at instantiation"""
         model = BaseModel()
         self.assertEqual(model.created_at, model.updated_at)
 
@@ -68,8 +68,8 @@ class TestBaseModelStr(unittest.TestCase):
     def test_str_format(self):
         """Test the output format of __str__."""
         model = BaseModel()
-        expected = f"[{model.__class__.__name__}] ({model.id}) {model.__dict__}"
-        self.assertEqual(str(model), expected)
+        expectd = f"[{model.__class__.__name__}] ({model.id}) {model.__dict__}"
+        self.assertEqual(str(model), expectd)
 
 
 class TestBaseModelSave(unittest.TestCase):
@@ -101,7 +101,7 @@ class TestBaseModelToDict(unittest.TestCase):
         self.assertIsInstance(model.to_dict(), dict)
 
     def test_to_dict_contains_all_keys(self):
-        """Test that to_dict includes all instance attributes plus __class__."""
+        """Test that to_dict includes all instance attributes n'  __class__."""
         model = BaseModel()
         model_dict = model.to_dict()
         expected_keys = {"id", "created_at", "updated_at", "__class__"}
@@ -115,12 +115,18 @@ class TestBaseModelToDict(unittest.TestCase):
     def test_created_at_to_dict_format(self):
         """Test that created_at is in ISO format in to_dict output."""
         model = BaseModel()
-        self.assertEqual(model.to_dict()["created_at"], model.created_at.isoformat())
+        self.assertEqual(
+                model.to_dict()["created_at"],
+                model.created_at.isoformat()
+                )
 
     def test_updated_at_to_dict_format(self):
         """Test that updated_at is in ISO format in to_dict output."""
         model = BaseModel()
-        self.assertEqual(model.to_dict()["updated_at"], model.updated_at.isoformat())
+        self.assertEqual(
+                model.to_dict()["updated_at"],
+                model.updated_at.isoformat()
+                )
 
     def test_to_dict_does_not_modify_instance(self):
         """Test that to_dict does not modify the original instance."""
