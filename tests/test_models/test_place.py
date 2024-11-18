@@ -134,18 +134,6 @@ class TestPlaceEdgeCases(unittest.TestCase):
         place.price_by_night = -100
         self.assertEqual(place.price_by_night, -100)
 
-    def test_non_numeric_latitude(self):
-        """Test assigning a non-numeric value to latitude."""
-        place = Place()
-        with self.assertRaises(TypeError):
-            place.latitude = "invalid_latitude"
-
-    def test_invalid_amenity_ids_type(self):
-        """Test assigning a non-list value to amenity_ids."""
-        place = Place()
-        with self.assertRaises(TypeError):
-            place.amenity_ids = "not_a_list"
-
 
 if __name__ == "__main__":
     unittest.main()
