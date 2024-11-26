@@ -1,4 +1,4 @@
-.places{
+.places {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -6,14 +6,14 @@
 	flex-wrap: wrap;
 }
 
-.places h1{
+.places h1 {
 	text-align: left;
 	font-size: 30px;
 	display: block;
 	width: 100%;
 }
 
-.places article{
+.places article {
 	width: 390px;
 	padding: 20px;
 	margin: 20px;
@@ -22,7 +22,7 @@
 	float: left;
 }
 
-.places h2{
+.places h2 {
 	font-size: 30px;
 	text-align: center;
 	padding: 0;
