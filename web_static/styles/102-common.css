@@ -1,0 +1,21 @@
+* {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+body {
+        margin: 0px;
+        padding: 0px;
+        color: #484848;
+        font-size: 14px;
+        font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: relative;
+        min-height: 100vh;
+}
+
+.container {
+        max-width: 1000px;
+        margin: 30px auto 0 auto;
+        padding-bottom: 90px;
+}
